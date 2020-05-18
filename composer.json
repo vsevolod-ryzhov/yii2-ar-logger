@@ -1,0 +1,25 @@
+{
+    "name": "vsevolod-ryzhov/yii2-ar-logger",
+    "description": "Yii2 ActiveRecord changes logger",
+    "type": "yii2-extension",
+    "version": "dev-master",
+    "require": {
+        "php": ">=7.1",
+        "yiisoft/yii2": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "vsevolodryzhov\\yii2ArLogger\\": "src"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vsevolod Ryzhov",
+            "email": "ryzhov@eot.company"
+        }
+    ]
+}
