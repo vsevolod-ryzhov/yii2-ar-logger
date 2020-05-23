@@ -6,7 +6,7 @@ Log change of Yii2 AR models
 
 Via Composer
 ```
-composer require vsevolod-ryzhov/yii2-ar-logger "dev-master"
+composer require vsevolod-ryzhov/yii2-ar-logger
 ```
 
 ## Logs storage
