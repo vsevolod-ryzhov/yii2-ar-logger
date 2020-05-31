@@ -34,7 +34,7 @@ class LogModel extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['action', 'model_name', 'model_id'], 'required'],
@@ -48,7 +48,7 @@ class LogModel extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id_log' => '#',

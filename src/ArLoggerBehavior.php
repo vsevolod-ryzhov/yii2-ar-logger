@@ -13,27 +13,32 @@ use yii\helpers\StringHelper;
 
 class ArLoggerBehavior extends Behavior
 {
-    const ACTION_CHANGE = 'CHANGE';
-    const ACTION_INSERT = 'INSERT';
-    const ACTION_UPDATE = 'UPDATE';
-    const ACTION_DELETE = 'DELETE';
+    private const ACTION_CHANGE = 'CHANGE';
+    private const ACTION_INSERT = 'INSERT';
+    private const ACTION_UPDATE = 'UPDATE';
+    private const ACTION_DELETE = 'DELETE';
 
     public $storage;
     public $excludedAttributes;
 
+    /**
+     * ArLoggerBehavior constructor.
+     * @param array $config
+     * @throws NotInstantiableException
+     */
     public function __construct($config = [])
     {
         parent::__construct($config);
         if (empty($this->storage)) {
             $this->storage = new DbLoggerStorage();
-        }  elseif (!in_array(ArLoggerStorageInterface::class, class_implements($this->storage))) {
+        }  elseif (!in_array(ArLoggerStorageInterface::class, class_implements($this->storage), true)) {
             throw new NotInstantiableException(sprintf('%s must implement %s interface', $this->storage, ArLoggerStorageInterface::class));
         } else {
             $this->storage = new $this->storage;
         }
     }
 
-    public function events()
+    public function events(): array
     {
         return [
             ActiveRecord::EVENT_AFTER_INSERT => 'addLog',
@@ -66,18 +71,19 @@ class ArLoggerBehavior extends Behavior
     {
         switch ($event_name) {
             case ActiveRecord::EVENT_AFTER_INSERT:
-                return self::ACTION_INSERT;
+                $action_name = self::ACTION_INSERT;
                 break;
             case ActiveRecord::EVENT_AFTER_UPDATE:
-                return self::ACTION_UPDATE;
+                $action_name = self::ACTION_UPDATE;
                 break;
             case ActiveRecord::EVENT_AFTER_DELETE:
-                return self::ACTION_DELETE;
+                $action_name = self::ACTION_DELETE;
                 break;
             default:
-                return self::ACTION_CHANGE;
+                $action_name = self::ACTION_CHANGE;
                 break;
         }
+        return $action_name;
     }
 
     /**
@@ -133,7 +139,7 @@ class ArLoggerBehavior extends Behavior
         $this->storage->store($loggerObject);
     }
 
-    public function addDeleteLog()
+    public function addDeleteLog(): void
     {
         /* @var ActiveRecord $owner */
         $owner = $this->owner;
